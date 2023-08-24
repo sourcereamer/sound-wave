@@ -1,0 +1,220 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sketch-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.input-container {
+    position: fixed;
+    top: 5%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: rgba(94, 92, 92, 0.4);
+    padding: 7px;
+    margin-left: 7px;
+}
+
+.input-container input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    flex-grow: 1;
+    padding-left: 5px;
+    padding-right: 15px;
+}
+
+.input-container button {
+    margin-left: -10px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 25px;
+    background-color: rgba(26, 119, 67, 0.5);
+    color: rgba(255, 255, 255, 0.89);
+    cursor: pointer;
+}
+
+.input-container button2 {
+    margin-left: 0px;
+    padding: 8px 8px;
+    border: none;
+    border-radius: 25px;
+    color: rgba(255, 255, 255, 0.89);
+    cursor: pointer;
+    transform: scale(-1, 1);
+}
+
+#playButtonContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+#play {
+    cursor: pointer;
+}
+
+.stroke-solid {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 300;
+    stroke-width: 3px;
+    stroke: whitesmoke;
+    transition: stroke-dashoffset 1s ease, opacity 1s ease;
+}
+
+.icon {
+    transform: scale(0.8);
+    transform-origin: 50% 50%;
+    fill: white; /* Цвет треугольника */
+    transition: transform 200ms ease-out;
+}
+
+#playButtonContainer.hide {
+    animation: fadeOut 1s ease forwards;
+}
+
+#play:hover .stroke-solid {
+    opacity: 1;
+    stroke-dashoffset: 300;
+}
+
+#play:hover .icon {
+    transform: scale(.9);
+}
+
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+#playButtonContainer.hover {
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.hidden {
+    display: none;
+}
+
+#sketch-container.collapsed .input-container {
+    position: fixed;
+    top: 5%;
+    left: 1.5%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: rgba(24, 124, 70, 0.5);
+    padding: 0;
+    opacity: 70%;
+}
+
+#sketch-container.collapsed .input-container input {
+    display: none;
+}
+
+#sketch-container.collapsed .input-container button {
+    display: none;
+}
+
+#sketch-container.collapsed .input-container button2 {
+    width: 20px;
+    height: 20px;
+    margin: 2px 1px 0px 4px;
+    color: white;
+    transform:rotateX(180deg);
+}
+
+#sketch-container.collapsed .input-container button span {
+    display: none;
+}
+
+#sketch-container.collapsed .input-container button::before {
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    25% {
+        stroke-dashoffset: 180;
+    }
+    50% {
+        stroke-dashoffset: 360;
+    }
+    75% {
+        stroke-dashoffset: 540;
+    }
+    100% {
+        stroke-dashoffset: 720;
+    }
+}
+
+.stroke-solid.loading {
+    animation: spin 3s linear infinite;
+    stroke-dasharray: 360;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s ease, opacity 2s ease;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+
+#fullscreen-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    opacity: 70%;
+}
