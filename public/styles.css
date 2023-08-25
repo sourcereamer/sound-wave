@@ -5,12 +5,50 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    background-color: rgba(94, 92, 92, 0.4);
 }
 
 #sketch-container {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+/* Стили для смартфонов */
+@media screen and (max-width: 600px) {
+    body {
+        justify-content: flex-start; /* Центрирование по вертикали для маленьких экранов */
+    }
+
+    .input-container {
+        position: fixed;
+        top: 0; /* Расположение вверху */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%; /* Занимает всю ширину экрана */
+    }
+
+    .input-container input {
+        width: 80%; /* Ширина инпута для маленьких экранов */
+        margin: 5px auto; /* Центрирование инпута по горизонтали */
+    }
+
+    #playButtonContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #fullscreen-button {
+        display: none; /* Скрыть кнопку полноэкранного режима */
+    }
+
+    .input-container button {
+        margin-left: 0;
+        margin-top: 5px; /* Отступ сверху */
+    }
 }
 
 .input-container {
@@ -95,7 +133,6 @@ body {
     transform: scale(.9);
 }
 
-
 @keyframes fadeOut {
     0% {
         opacity: 1;
@@ -117,6 +154,7 @@ body {
         opacity: 1;
     }
 }
+
 .hidden {
     display: none;
 }
@@ -202,12 +240,10 @@ body, html {
     flex-direction: column;
 }
 
-
 .content {
     flex: 1;
     overflow-y: auto;
 }
-
 
 #fullscreen-button {
     position: absolute;
@@ -217,4 +253,26 @@ body, html {
     height: 24px;
     cursor: pointer;
     opacity: 70%;
+}
+///////////////////////////
+#mobile-warning {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ff5733;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    animation: fadeInOut 5s linear;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+    }
+    10%, 90% {
+        opacity: 1;
+    }
 }

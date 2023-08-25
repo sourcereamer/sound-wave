@@ -300,3 +300,20 @@ document.addEventListener("fullscreenchange", function() {
 	}
 });
 
+///////////////
+
+function isMobileDevice() {
+	return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+}
+
+// Отображение предупреждения, если устройство мобильное
+if (isMobileDevice()) {
+	const mobileWarning = document.getElementById('mobile-warning');
+	if (mobileWarning) {
+		mobileWarning.style.display = 'block';
+		setTimeout(function() {
+			mobileWarning.style.display = 'none';
+		}, 5000);
+	}
+}
+
