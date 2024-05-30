@@ -129,12 +129,19 @@ async function fetchAudioAndPlay(videoUrl) {
 	if (data.success) {
 		const audioFilePath = decodeURIComponent(data.audioUrl);
 		const playButtonContainer = document.getElementById('playButtonContainer');
+
 		song = loadSound(audioFilePath, () => {
 			console.log('Аудио загружено и готово к воспроизведению.');
 			// Появление кнопки Play, когда Аудио загружено и готово к воспроизведению
 			playButtonContainer.classList.add('hover');
+			// теперь кнопка плэй и круг загрузки скрываются и видео производится автоматически через 2 сек
+			setTimeout(() => {
+				song.play();
+				playButtonContainer.classList.add('hide');
+				playButtonContainer.classList.remove('hover');
+				loop(); // Перезапуск анимации
+			}, 2000);
 		});
-
 		//ВИДЕО
 		selectRandomVideo(); // Выбор нового видео
 		bgVideo.loop(); // Зациклить новое видео
@@ -328,13 +335,14 @@ document.addEventListener("fullscreenchange", function() {
 	}
 });
 
-///////////////
+
+
+///////////////////////
 
 function isMobileDevice() {
 	return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 }
 
-///////////////////////
 // Отображение предупреждения, если устройство мобильное
 if (isMobileDevice()) {
 	const mobileWarning = document.getElementById('mobile-warning');
