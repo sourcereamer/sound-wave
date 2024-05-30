@@ -1,9 +1,9 @@
-let song, fft, innerRadius, randomImage;
-var bgImages = [];
+let song, fft, innerRadius, randomImage, bgVideo;
+var bgImages = [], bgVideos = [];
 var particles = [];
 let playButtonSize = 100;
 
-function preload() {
+/*function preload() {
 	for (var i = 1; i <= 15; i++) {
 		var imageName = `images/bg/bg${i}.jpg`; // Формирование имени файла изображения
 		bgImages.push(imageName);
@@ -12,8 +12,26 @@ function preload() {
 	// Выбор случайного изображения из массива
 	var randomIndex = floor(random(0, bgImages.length));
 	randomImage = loadImage(bgImages[randomIndex]);
+}*/ //фото
+
+// ВИДЕО
+function preload() {
+	for (var i = 1; i <= 4; i++) {
+		var videoName = `images/bg/vid${i}.mp4`; // Формирование имени файла видео
+		bgVideos.push(videoName);
+	}
+	selectRandomVideo();
 }
 
+// Функция выбора случайного ВИДЕО
+function selectRandomVideo() {
+	if (bgVideo) {
+		bgVideo.remove(); // Удаление текущего видео, если оно существует
+	}
+	var randomIndex = floor(random(0, bgVideos.length));
+	bgVideo = createVideo(bgVideos[randomIndex]);
+	bgVideo.hide();
+}
 
 function setup() {
 	var canvas = createCanvas(windowWidth, windowHeight);
@@ -24,7 +42,7 @@ function setup() {
 	rectMode(CENTER);
 	fft = new p5.FFT(0.3);
 
-	randomImage.filter(BLUR, 10);
+	//randomImage.filter(BLUR, 10); для фото
 
 	const loadButton = document.getElementById('loadButton');
 	loadButton.addEventListener('click', handleLoadButtonClick);
@@ -43,6 +61,9 @@ function setup() {
 			playButtonContainer.classList.remove('hover');
 		});
 
+		// ВИДЕО
+		bgVideo.loop(); // Зациклить видео
+		bgVideo.volume(0); // Отключить звук видео
 	});
 
 	// Свертка и развертка поля для ссылки
@@ -113,6 +134,12 @@ async function fetchAudioAndPlay(videoUrl) {
 			// Появление кнопки Play, когда Аудио загружено и готово к воспроизведению
 			playButtonContainer.classList.add('hover');
 		});
+
+		//ВИДЕО
+		selectRandomVideo(); // Выбор нового видео
+		bgVideo.loop(); // Зациклить новое видео
+		bgVideo.volume(0); // Отключить звук
+
 	} else {
 		const errorMessage = 'Ошибка при получении ссылки на YouTube: ' + data.error;
 		alert(errorMessage);
@@ -133,7 +160,8 @@ function draw() {
 		rotate(random(-0.9, 0.9));
 	}
 
-	image(randomImage, 0, 0, width + 100, height + 100);
+	//image(randomImage, 0, 0, width + 100, height + 100); //фон-фото
+	image(bgVideo, 0, 0, width + 100, height + 100); //теперь фон ВИДЕО
 	pop()
 
 	let alpha = map(amp, 0, 255, 100, 150);
@@ -306,6 +334,7 @@ function isMobileDevice() {
 	return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 }
 
+///////////////////////
 // Отображение предупреждения, если устройство мобильное
 if (isMobileDevice()) {
 	const mobileWarning = document.getElementById('mobile-warning');
@@ -317,3 +346,4 @@ if (isMobileDevice()) {
 	}
 }
 
+///////////////////////
